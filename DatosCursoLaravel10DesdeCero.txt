@@ -1,0 +1,238 @@
+1)-	te descargas laragon de su web oficial:
+
+	https://laragon.org/download/index.html
+
+	link directo: 
+
+	https://github.com/leokhoa/laragon/releases/download/6.0.0/laragon-wamp.exe
+_______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+2)- descargas composer de la web oficial
+
+	https://getcomposer.org/
+
+	link directo:
+
+	https://getcomposer.org/Composer-Setup.exe
+
+	luego verifica si laravel esta instalado en las variables del sistema asi tal cual como lo anterior con laravel -v
+
+	si te sale error facil ve a las variables del sistema dependiendo el sistema ve a propidades del sistema
+
+	luego a varibales de entorno, en variables del sistema buscas el path, das doble clic y te abre el modal
+
+	para crear una nueva varibale y pones la siguiente ruta C:\Users\Developmet´s_BD\AppData\Roaming\Composer\vendor\bin
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+3)- descargas php en su ultima version de la web oficial
+	
+	https://www.php.net/downloads
+
+	https://windows.php.net/download#php-8.2
+
+	link directo: 
+
+	https://windows.php.net/downloads/releases/php-8.2.5-nts-Win32-vs16-x64.zip
+
+	descomprimes el .zip que bajaste y esa carpeta que queda debes llevarla a C:\laragon\bin\php y pegarla hay
+
+	paso seguido revisas en la terminal o cmd con php -v que este en su ultima version
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+4)- para crear un proyecto nuevo hay dos posibilidades:
+	
+	ejemplo 1:
+	principalmente en laragon se le da iniciar todo y todo queda iniciado apache php sql todo, adicionalmente con solo darle
+	clic derecho creacion rapida de sitio web despliega un menu con varioas opciones y hay escojes laravel, paso seguido le
+	asignas el nombre y abre la terminal y crea todo en automatico
+	para ver los proyectos creados es neserario poner en la url el nombre del proyecto o carpeta seguido de .test ejemplo
+	http://developmentsbd.test
+
+	ejemplo 2:
+	en laragon hay un boton que dice terminal , abre algo como el cmd o git en bash, debes primero comprobar la version del php con php -v luego de eso si no hay errores ingresa esto
+	php global require laravel/installer 
+	para que instale el instalador por terminal de laravel y paso seguido para crear un proyecto en laravel pones lo siguiente como : 
+	laravel new nombreProyecto
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+5)- estructura de carpetas en laravel 10:
+	
+	app=> contiene el codigo fuente en el aplicativo
+	bootstrap=> tiene el archivo app que se encarga de arracnar el framework y la carpeta cache que se encarga de cargar y guardar los archivos para que no se reprocesen en cada peticion
+	config=>toda la configuracion de laravel
+	database=>
+	lang=>
+	public=>
+	resources=>
+	router=>rutas del aplicativo
+	storage=>
+	tests=>
+	vendor=>
+	.editorconfig
+	.env
+	.env.example
+	.gitattributes
+	.gitignore
+	.styleci.yml
+	artisan
+	composer.json
+	composer.lock
+	package.json
+	phpunit.xml
+	README.md
+	vite.conf.js
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+6)- rutas en laravel:
+
+	Route::get(); viendo
+	Route::view(); viendo
+	Route::post();
+	Route::patch();
+	Route::put();
+	Route::delete();
+	Route::option();
+
+	para responder a varios metodos en la misma ruta entonces se puede usar:
+	Route::match(['put','patch'],'/', function(){
+		//
+	});
+
+	si se quiere responder a todos los tipos de peticiones se puede usar:
+	Route::any('/', function(){
+		//
+	});
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+7)- named router o nombres de rutas:
+	los asignamos asi:
+	
+	Route::view('ruta','vista')->name('nombreRuta');
+	
+	y asi sucesivamente como en seguida
+
+	Route::view('/',"welcome")->name('home');
+	Route::view('nosotros',"nosotros")->name('nosotros');
+	Route::view('servicios',"servicios")->name('servicios');
+	Route::view('contacto',"contacto")->name('contacto');
+	Route::view('blog',"blog")->name('blog');
+	Route::view('registro',"registro")->name('registro');
+	Route::view('recuperarCuenta',"recuperarCuenta")->name('recuperarCuenta');
+	Route::view('perfil',"perfil")->name('perfil');
+	Route::view('ingreso',"ingreso")->name('ingreso');
+	Route::view('salir',"salir")->name('salir');
+
+	luego le hacemos referencia de la siguiente manera el en html
+
+	<a href="<?= route('nameAsigandoEnLaRuta') ?>">Inicio</a>
+
+	<a href="<?= route('nosotros') ?>">Nosotros</a>
+	<a href="<?= route('blog') ?>">Blog</a>
+	<a href="<?= route('contacto') ?>">Contacto</a>
+	<a href="<?= route('ingreso') ?>">Ingresar</a>
+    <a href="<?= route('registro') ?>">Registro</a> 
+	
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+8)- blade el motor de plantillas de laravel
+	para utilizar blade el unico requisito es que la vista debe terminar en blade.php
+	como ejemplos:
+
+	inicio.blade.php
+	nosotros.blade.php
+	contacto.blade.php
+	perfil.blade.php
+
+	es de tener en cuenta que si usamos blade, cuando hacemos referencia a las rutas en el html
+	ya no se haria asi:
+
+	<a href="<?= route('nosotros') ?>">Nosotros</a>
+	<a href="<?= route('blog') ?>">Blog</a>
+	<a href="<?= route('contacto') ?>">Contacto</a>
+	<a href="<?= route('ingreso') ?>">Ingresar</a>
+    <a href="<?= route('registro') ?>">Registro</a>
+
+    si no que se deberia cambiar la sintaxis de la siguiente manera para que funcione blade a la perfeccion
+
+    <a href=" {{ route('nosotros') }} 	">Nosotros</a>
+	<a href=" {{ route('blog') 	   }} 	">Blog</a>
+	<a href=" {{ route('contacto') }} 	">Contacto</a>
+	<a href=" {{ route('ingreso')  }} 	">Ingresar</a>
+    <a href=" {{ route('registro') }} 	">Registro</a>
+
+    ya que inplementamos blade es nesesario usar sus directivas en este caso como vamos a 
+    modularizar con un nav en una plantilla nueva de blade como en el mvc tradicional ya 
+    separado en un archivo nuevo el nav, para poder usarlo en otros archivos
+    se incluye asi: 
+    @include('partials.navegacion')
+
+    no es neserario poner la ruta del achivo que contiene el nav pero si la carpeta contenedora
+    como lo es partials y adicionalmenten no se le pone / , para ingresar a la carpeta se pone .
+	asi tal cual: @include('partials.navegacion') comom ven tampoco hay que poner la extencion 
+	del archivo que en este caso es navegacion.blade.php , pues blade asume que el archivo ya 
+	tiene esta extencion
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+
+9)- blade layouts o plantillas reutilizables de blade
+	las plantillas reutilizables tienen dos opciones de uso como lo son:
+
+	A.herencias de plantillas
+	B.componentes
+
+	A. para hacer uso de la herencias de plantillas de separa la plantilla base como
+	   en el tradicional mvc y asi como se hizo con el nav o la barra de navegacion
+	   ya separada la plantilla en un archivo, para poder llamar esa plantilla o poder
+	   hacer uso de la misma se debe usar la directiva @extends('carpetaContenedoraDeLaPlanilla')
+	   ejemplo mas practico asi:
+
+	   @extends('layouts.appPlantilla') 
+
+	   y bien asi llamamos la plantilla en las vistas, ahora vamos a mostrar el html o las
+	   secciones de codigo que queremos que se muestren en la plantilla por que finalmente 
+	   lo que se muestra al final en el navegador es la plantilla que se asigno
+	   y esto se aria usando la convencion @yield('nombreCualquieraDescriptivoPuedeSer') en
+	   la plantilla en mi caso sera: 
+	   
+	   @yield('contenido') //asi se usa en la plantilla
+		
+		osea me explico @yield('contenido') se usa en la plantilla para que la plantilla lea
+		lo que esta en la pagina de la vista, y en la vista se debe usar la convencion:
+		
+		//asi se usa en la las vistas
+		@section('contenido') //como se aprecia tiene el atributo contenido que se puso arriba
+		  <h1 class="text-center">Pagina De Welcome O Inicio O Home</h1>
+		@endsection
+
+		y en el interior de la convencion va el html que se va a mostrar en la plantilla 
+
+		quedamos en el minuto 35:53
+
+
+	
+
+
+	
+
+
