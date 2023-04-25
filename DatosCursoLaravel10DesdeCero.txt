@@ -1,3 +1,102 @@
+quedamos en min 37:49
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+11)- Controllers o controladores
+
+quedamos en el minuto 45:50
+	
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+10)- Blade Components o componentes de blade
+	la primera diferencia conlos componentes es que aca se usan slots por que dentro de todo componente de blade tenemos la 
+	variable resewrvada {{ $slot }} donde se imprime el contenido variable principal , seria el equivalente al @yield('propiedad')
+	pero mas facil, mas pulido jajaja, para usar el slot en las vistas hay dos maneras:
+	
+	A)-la primera es el @component('Carpeta.archivoComponente')
+	asi que todo lo que pongamos en la vista dentro de el component se mostrara en la platilla donde se hizo el llamado con el slot ejemplo:
+	@component('components.layout')
+		<h1 class="text-center">Pagina De Inicio</h1>
+	@endcomponet
+	y en la plantilla se veria asi :
+		<!DOCTYPE html>
+		<html>
+		<head>
+		  <meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <title>laravel</title>
+		</head>
+		<body>
+
+			{{ $slot }}
+
+		</body>
+		</html>
+
+		B)-la segunda es con las etiquetas de componentes de blade , es como una etiqueta pero con el nombre del componente asi:
+		<x-layout>
+			<h1 class="text-center">Pagina De Inicio</h1>
+		</x-layout>
+
+		luego tenemos otras opciones como los componentes con parametros de propiedad en los que podemos pasar etiquetas asi:
+		asi lo defino en la plantilla
+
+		<title>KitDevBD -> {{ $tituloPagina ?? ""}}</title> //el ?? "" es por si no encuentra la propiedad entopnces imprime lo que tenga "" dentro 
+
+		y enseguida es como se define en las vistas para que las interacciones sean mas amenas asi como se plasma enseguida
+
+		<x-slot name="tituloPagina">
+			Inicio
+		</x-slot>
+
+		tambien lo podemos hacer asi en la plantilla 
+		<title>KitDevBD -> {{ $title ?? ""}}</title>
+
+		y en la vista lo referenciamos asi:
+		<x-layout title="inicioBD">
+			<h1 class="text-center">Pagina De Inicio</h1>
+		</x-layout>
+
+		en el siguiente veras como se pasa la propiedad escrita en camelCase en la plantilla asi:
+		<meta name="description" content="  {{ $metaDescription ?? 'Default meta description KitDevBD' }} "> 
+
+		y en la vista se pasa la referencia y por convencion escrita en kebab kase asi:
+		<x-layout title="inicio" meta-description="inicio meta description">
+			<h1 class="text-center">Pagina De Inicio</h1>
+		</x-layout>
+
+		asi se veria ordenado e identado checa:
+		<x-layout 
+
+			title="inicio" 
+			meta-description="inicio meta description">
+
+			<h1 class="text-center">Pagina De Inicio</h1>
+
+		</x-layout>
+
+		a continuacion es de saberse que si tienes carpeta tras carpeta tras carpeta en views cunado uses los componentes debes poner
+		como en este caso que mi ruta esta en views/components/layouts/app.blade.php y tambien esta navegacion.blade.php pues hay que cambiar las 
+		rutas en los componentes en las vistas de la siguientes maneras:
+		<x-layouts.app 
+
+			title="inicio" 
+			meta-description="inicio meta description"
+
+			>
+
+			<h1 class="text-center">Pagina De Inicio</h1>
+
+		</x-layouts.app>
+
+		y como la barra de navegacion tambien fue afectada por el cambio de tuta entonces pasa igual pasa de estar asi en la plantilla:
+		  <x-navegacion/>  a estar asi :     <x-layouts.navegacion/>
+
+		si nesesitamos que ejecute php en un atributo , blade no deja a menos de que se le anteponga :  como ejemplo asi
+		queremos hacer uns suma y ponemos el atributo  sum="2+2" blade no lo ejecutara a menos de que se pongas asi 
+		:sum="2+2" y para que salga el resultado en la plantila se debe llamar con el nombre del atributo pero como una variable asi:
+		{{ $sum }}
 ______________________________________________________________________________________________________________________
 //--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
 -----------------------------------------------------------------------------------------------------------------------
@@ -61,9 +160,8 @@ ________________________________________________________________________________
 		</body>
 		</html>
 
-		y ahora si sigamos con el trabajo
+		es de saber que una plantilla puede tener multiples @tield('') 
 
-		quedamos en el minuto 35:53
 ______________________________________________________________________________________________________________________
 //--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
 -----------------------------------------------------------------------------------------------------------------------

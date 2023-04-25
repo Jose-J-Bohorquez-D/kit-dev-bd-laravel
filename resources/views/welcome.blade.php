@@ -1,4 +1,10 @@
-@extends('layouts.appPlantilla')
-@section('contenidoPagina')
+<x-layouts.app 
+
+	title="inicio" 
+	meta-description="inicio meta description"
+
+	>
+
 	<h1 class="text-center">Pagina De Inicio</h1>
-@endsection
+
+</x-layouts.app>
