@@ -1,8 +1,156 @@
-quedamos en min 37:49
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+13)- eloquent min 1:09:59
+
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+13)- migraciones min 59:19
+hay que pensar que las migraciones son como los planos de la base de datos, como la
+plantilla, las migraciones se hacen a partir de unas plantillas que estan en:
+database/migrations/ y por defecto hay 4 create users, create password, 
+create failed y create personal, ya que son solo plantillas para activarlas o hacerlas
+funcionar es nesesario hacer la migracion o la ejecucion de dichas plantillas por
+la terminal y verificando que estemos dentro de la carpeta de el proyecto 
+con el comando: 
+php artisan migrate 
+se activan todas las migraciones, por defecto las 
+migraciones tienen un metodo up() el cual en su interior determina las acciones como
+crear y un metodo down que vendria siento lo contrario como eliminar 
+si ahora queremos revertir los cambios que se hicieron con el php artisan migrate lo
+unico que se debe hacer es poner el siguiente comando:
+php artisan migrate:rollback 
+y esto eliminara todas las migraciones anteriores
+ahora pasan dos eventos si estamos en produccion y nesesitamos agregar un campo en 
+una tabla, pero no hay datos de importancia o son de prueba (pilas)esto elimina todo
+con:
+ php artisan migrate:fresh
+eliminara todas las migraciones, y las vuelve a crear de ceros esto para poner el 
+campo nuevo que ingresamos 
+
+ahora vamos a crear una nueva migracion desde cero y para una tabla especifica:
+con : php artisan make:migration create_posts_table
+
+esto creara una plantilla y esta es la que modificaremos, ahora luego de
+hacer cambios y si por metodologias o nesesidad es nesesario agregar campos
+a la tabla , sin perder datos es nesesario crear una nueva migracion con la
+siguiente convencion:
+php artisan make:migration add_body_to_posts_table
+y luego agregamos los campos que queremos adicionar a la tabla de posts
+por que la convencion la lee automaticamente laravel y lee el 
+(_to_) y la tabla (_posts_), por eso se debe hacer con esta convencion
+luego debemos agregar los campos nuevos hay y migrarla nuevamente
+un truquillo es este 
+$table->longText('contenido')->after('titulo'); 
+->acfter le estamnos diciendo que nos ubique el campo conido despues de el campo
+titulo, este caso es para cuando tengamos que mantener datos en la base de datos
+si no es asi deberiamos solo editar la migracion inicial y darle refresh
+______________________________________________________________________________________________________________________
+//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
+-----------------------------------------------------------------------------------------------------------------------
+12)- database conexion o conexion a la base de datos min 53:53
+para generar la conexion se debe editar el archivo .env teniendo en cuenta 
+el config/database.php yo en este caso practivo me cree una base de datos usando el
+boton de database en la interface de laragon la cual me abrio heidy sql en otro puerto
+y med io las opciones normales del heidy sql , ahora procedere a crear una tabla para
+las practicas con sql
+
+ahora es de saber que podriamos manejar asi la base de datos si ya hay una existente
+pero si por el contrario no es asi, es de saber que hay un sistema para crear  el esquema
+de la base de datos y lo veremo mas adelnate
+
+despues de crear la tabla posts y agregar unos 4 posts
+regrese a el controlador en app/http/controllers/PostController.php
+para revisar si tenia este referencia:
+use Illuminate\Support\Facades\DB;
+
+luego edite el metodo index hasta que lo use para conectarme a la base de datos con la
+siguiente linea $posts = DB::table('posts')->get(); y quedo asi mi controlador
+
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class PostController extends Controller
+{
+    public function index()
+    {
+        $posts = DB::table('posts')->get();
+                
+        return view('blog',['posts'=>$posts]);
+    }
+}
+ como en la vista de blog me dio error por que la variable posts , era un array y luego 
+ de leer la base de datos con laravel , laravel define una clase para este procedimiento
+ llamado stdClass que sirve para generar objetos genericos con laravel en este proceso
+ asi que tuve que modificar mi vista para acceder a los datos como en un objeto asi
+
+ <x-layouts.app 
+	title="Blog" 
+	meta-description="Blog meta description"
+	>
+	<h1 class="text-center">Pagina De Blog</h1>
+	@foreach($posts as $post)
+		<h1>@dump($post->titulo)</h1>
+	@endforeach
+</x-layouts.app>
 ______________________________________________________________________________________________________________________
 //--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//--/--//--//--//--//--//--//--//--//--//
 -----------------------------------------------------------------------------------------------------------------------
 11)- Controllers o controladores
+
+deberiamos saber que se pueden pasar los siguientes datos hacia una vista
+/*Route::view('/blog',"blog", ['posts' => $posts])->name('blog');*/
+/*Route::view('/blog',"blog",function(){
+    $posts = [
+    ['titulo' => 'primer post'],
+    ['titulo' => 'segundo post'],
+    ['titulo' => 'tercero post'],
+    ['titulo' => 'cuarto post'],
+    ['titulo' =>  'quinto post']
+];
+return view('blog',['posts'=>$posts]);
+})->name('blog');*/
+
+los controladores se pueden hacer o crear de manera manual en el editor de texto,pero
+se debe tener presentes las rutas y las dependencias y referencias, otra manera de hacerlo
+es por la terminal , esto para crear un controlador de 1 sola accrion y los controladores
+se almacenen por defecto en app/http/controllers/  alli puedes crearlos de manera manual
+y para llamar a dichos controladores desde las rutas puede usar una de las siguientes dos 
+opciones:
+/*asi es para llamar a un controlador de una sola aacion o un solo metodo, eso en las rutas*/
+Route::get('/blog',PostController::class)->name('blog');
+Route::get('/blog',PostController::class);
+o
+Route::get('/blog','App\Http\Controllers\PostController');
+
+si revisamos el controlador se veria asi:
+<?php 
+namespace App\Http\Controllers;
+class PostController
+{
+	public function __invoke()
+	{
+		$posts = [
+		    ['titulo' => 'primer post'],
+		    ['titulo' => 'segundo post'],
+		    ['titulo' => 'tercero post'],
+		    ['titulo' => 'cuarto post'],
+		    ['titulo' =>  'quinto post'],
+			];
+				return view('blog',['posts'=>$posts]);
+	}
+}
+?>
+
+pero como vamos a usar diferentes acciones o metodos entonces para hacer el llamado desde la vista
+seria de la siguiente manera observa:
+Route::get('/blog',[PostController::class,'NombreMetodoParaEjecutar'])->name('blog');
+
+y para crearlos por la consola de laravel es por medio del comando artisan 
 
 quedamos en el minuto 45:50
 	
